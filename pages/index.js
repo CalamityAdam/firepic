@@ -1,21 +1,13 @@
 import Head from 'next/head';
-import Link from 'next/link';
-import Loader from '../components/Loader';
+import toast from 'react-hot-toast';
+import Container from '@material-ui/core/Container';
 
 export default function Home() {
   return (
-    <div>
-      <Link
-        prefetch={false}
-        href={{
-          pathname: '/[username]',
-          query: { username: 'adammm' },
-        }}
-      >
-        <a className="text-5xl">Adam's Profile</a>
-      </Link>
-      
-      <Loader show />
-    </div>
+    <Container maxWidth="sm">
+      <button onClick={() => toast.success('hello toast!')}>
+        Toast Me
+      </button>
+    </Container>
   );
 }

@@ -1,44 +1,64 @@
+import { useContext } from 'react';
+import { UserContext } from '../lib/context';
 import Link from 'next/link';
+import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
+
+const Nav = styled.nav`
+  width: 100vw;
+  height: 4rem;
+  background-color: #007aff;
+  margin-bottom: 2rem;
+`;
+const NavList = styled.ul`
+  display: flex;
+  margin: 0;
+  justify-content: space-between;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  list-style: none;
+  height: 100%;
+  align-items: center;
+`;
 
 export default function Navbar() {
-  // const { user, username } = {};
-  const user = true;
-  const username = true;
+  const { user, username } = useContext(UserContext);
 
   return (
-    <nav className='bg-blue h-16'>
-      <ul className='max-w-7xl flex mx-8 justify-between items-center h-full'>
-        <li className='mr-auto'>
+    <Nav>
+      <NavList>
+        <li style={{marginRight: 'auto'}}>
           <Link href='/'>
-            <button type='button' className='text-4xl'>FEED</button>
+            <Button size='large'>
+              FEED
+            </Button>
           </Link>
         </li>
 
         {username && (
           <>
-            <li className='mr-4'>
+            <li>
               <Link href='/admin'>
-                <button type='button'>Write Posts</button>
+                <Button>Write Posts</Button>
               </Link>
             </li>
             <li>
-              <Link href={`/${username}`}>
-                {/* <img src={user?.photoURL} /> */}
-                <a>
-                  hello
-                </a>
-              </Link>
+              <Button>
+                <Link href={`/${username}`}>
+                  <img src={user?.photoURL} />
+                </Link>
+              </Button>
             </li>
           </>
         )}
         {!username && (
           <li>
             <Link href='/enter'>
-              <button type='button'>Log in</button>
+              <Button>Log in</Button>
             </Link>
           </li>
         )}
-      </ul>
-    </nav>
+      </NavList>
+    </Nav>
   );
 }

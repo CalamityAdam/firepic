@@ -1,13 +1,23 @@
+import Container from '@material-ui/core/Container';
+import { Toaster } from 'react-hot-toast';
 import Navbar from '../components/Navbar';
-import '../styles/globals.css'
+import { UserContext } from '../lib/context';
+import 'fontsource-roboto';
+import '../styles/globals.css';
+import { useUserData } from '../lib/hooks';
 
 function MyApp({ Component, pageProps }) {
+  const userData = useUserData();
+
   return (
-    <>
+    <UserContext.Provider value={userData}>
       <Navbar />
-      <Component {...pageProps} />
-    </>
+      <Container maxWidth='sm'>
+        <Component {...pageProps} />
+      </Container>
+      <Toaster />
+    </UserContext.Provider>
   );
 }
 
-export default MyApp
+export default MyApp;
