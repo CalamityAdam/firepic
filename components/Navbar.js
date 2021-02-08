@@ -20,6 +20,11 @@ const NavList = styled.ul`
   height: 100%;
   align-items: center;
 `;
+const Avatar = styled.img`
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+`;
 
 export default function Navbar() {
   const { user, username } = useContext(UserContext);
@@ -45,7 +50,7 @@ export default function Navbar() {
             <li>
               <Button>
                 <Link href={`/${username}`}>
-                  <img src={user?.photoURL} />
+                  <Avatar src={user?.photoURL} />
                 </Link>
               </Button>
             </li>
