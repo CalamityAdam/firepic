@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default function UserProfile({ user }) {
+export function UserProfile({ user }) {
   if (!user) return null;
 
   return (

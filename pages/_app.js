@@ -1,7 +1,6 @@
-import Container from '@material-ui/core/Container';
 import { Toaster } from 'react-hot-toast';
 import Head from 'next/head';
-import Navbar from '../components/Navbar';
+import { Navbar } from '../components';
 import { UserContext } from '../lib/context';
 import '../styles/globals.css';
 import { useUserData } from '../lib/hooks';
@@ -21,9 +20,7 @@ function MyApp({ Component, pageProps }) {
 
       <UserContext.Provider value={userData}>
         <Navbar />
-        <Container maxWidth='sm'>
-          <Component {...pageProps} />
-        </Container>
+        <Component {...pageProps} />
         <Toaster />
       </UserContext.Provider>
     </>

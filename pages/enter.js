@@ -1,5 +1,4 @@
 import { useCallback, useContext, useState, useEffect } from 'react';
-import Button from '@material-ui/core/Button';
 import { UserContext } from '../lib/context';
 import { auth, firestore, googleAuthProvider } from '../lib/firebase';
 import debounce from 'lodash.debounce';
@@ -16,10 +15,10 @@ export default function EnterPage({}) {
         !username ? (
           <UsernameForm />
         ) : (
-          <SignOutButton />
+          <SignOutbutton />
         )
       ) : (
-        <SignInButton />
+        <SignInbutton />
       )}
     </main>
   );
@@ -35,21 +34,21 @@ function SignInButton() {
   };
 
   return (
-    <Button variant='contained' color='primary' onClick={signInWithGoogle}>
+    <button variant='contained' color='primary' onClick={signInWithGoogle}>
       Sign in with Google
-    </Button>
+    </button>
   );
 }
 
 function SignOutButton() {
   return (
-    <Button
+    <button
       variant='contained'
       color='secondary'
       onClick={() => auth.signOut()}
     >
       Sign Out
-    </Button>
+    </button>
   );
 }
 
@@ -134,14 +133,14 @@ function UsernameForm() {
             loading={loading}
           />
 
-          <Button
+          <button
             variant='contained'
             color='primary'
             type='submit'
             disabled={!isValid}
           >
             Choose
-          </Button>
+          </button>
 
           <h3>Debug State</h3>
           <div>

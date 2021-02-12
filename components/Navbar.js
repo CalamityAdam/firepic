@@ -2,20 +2,25 @@ import { useContext } from 'react';
 import { UserContext } from '../lib/context';
 import Link from 'next/link';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
 
 const Nav = styled.nav`
-  width: 100vw;
+  display: flex;
+  align-items:center;
+  width: 100%;
   height: 4rem;
-  background-color: #007aff;
+  background-color: #22303c;
   margin-bottom: 2rem;
+  > button {
+    color: #ff6666;
+  }
 `;
 const NavList = styled.ul`
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 2rem;
   display: flex;
-  margin: 0;
+  margin: 0 auto;
   justify-content: space-between;
-  margin-right: 2rem;
-  margin-left: 2rem;
   list-style: none;
   height: 100%;
   align-items: center;
@@ -26,7 +31,7 @@ const Avatar = styled.img`
   border-radius: 50%;
 `;
 
-export default function Navbar() {
+export function Navbar() {
   const { user, username } = useContext(UserContext);
 
   return (
@@ -34,9 +39,7 @@ export default function Navbar() {
       <NavList>
         <li style={{marginRight: 'auto'}}>
           <Link href='/'>
-            <Button size='large'>
-              FEED
-            </Button>
+            <a className="link logo hvr-grow-rotate">LKGS</a>
           </Link>
         </li>
 
@@ -44,22 +47,22 @@ export default function Navbar() {
           <>
             <li>
               <Link href='/admin'>
-                <Button>Write Posts</Button>
+                <a className="link hvr-grow-rotate-backwards">Write Posts</a>
               </Link>
             </li>
             <li>
-              <Button>
+              <button>
                 <Link href={`/${username}`}>
-                  <Avatar src={user?.photoURL} />
+                  <Avatar className="hvr-bounce-in" src={user?.photoURL} />
                 </Link>
-              </Button>
+              </button>
             </li>
           </>
         )}
         {!username && (
           <li>
             <Link href='/enter'>
-              <Button>Log in</Button>
+              <button>Log in</button>
             </Link>
           </li>
         )}
