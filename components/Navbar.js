@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const Nav = styled.nav`
   display: flex;
-  align-items:center;
+  align-items: center;
   width: 100%;
   height: 4rem;
   background-color: #22303c;
@@ -30,6 +30,10 @@ const Avatar = styled.img`
   width: 40px;
   border-radius: 50%;
 `;
+const AvatarButton = styled.button`
+  background: transparent;
+  border: none;
+`;
 
 export function Navbar() {
   const { user, username } = useContext(UserContext);
@@ -37,9 +41,9 @@ export function Navbar() {
   return (
     <Nav>
       <NavList>
-        <li style={{marginRight: 'auto'}}>
+        <li style={{ marginRight: 'auto' }}>
           <Link href='/'>
-            <a className="link logo hvr-grow-rotate">LKGS</a>
+            <a className='link logo hvr-grow-rotate'>LKGS</a>
           </Link>
         </li>
 
@@ -47,15 +51,15 @@ export function Navbar() {
           <>
             <li>
               <Link href='/admin'>
-                <a className="link hvr-grow-rotate-backwards">Write Posts</a>
+                <a className='link hvr-grow-rotate-backwards'>Write Posts</a>
               </Link>
             </li>
             <li>
-              <button>
+              <AvatarButton type='button'>
                 <Link href={`/${username}`}>
-                  <Avatar className="hvr-bounce-in" src={user?.photoURL} />
+                  <Avatar className='hvr-bounce-in' src={user?.photoURL} />
                 </Link>
-              </button>
+              </AvatarButton>
             </li>
           </>
         )}

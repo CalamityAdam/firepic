@@ -69,8 +69,8 @@ export default function Home(props) {
       <Head></Head>
 
       <Main>
-        {/* <PostFeed posts={posts} /> */}
-        <PostFeed posts={postsFake} />
+        <PostFeed posts={posts} />
+        {/* <PostFeed posts={postsFake} /> */}
 
         {!loading && !postsEnd && (
           <button onClick={getMorePosts}>Load more</button>

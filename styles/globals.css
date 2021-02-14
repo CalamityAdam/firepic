@@ -17,6 +17,10 @@ body {
   padding: 0;
 }
 
+button {
+  cursor: pointer;
+}
+
 .loader {
   border: 10px solid var(--background);
   border-top: 10px solid var(--brightOrange);
