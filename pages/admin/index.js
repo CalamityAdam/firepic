@@ -79,13 +79,13 @@ function CreateNewPost() {
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeHolder='My Awesome Post!'
+        placeholder='My Awesome Post!'
         className='post-Title'
       />
       <p>
         <strong>Slug:</strong> {slug}
       </p>
-      <button type='submit' disabled={!isValid} className='btn-Primary'>
+      <button type='submit' disabled={!isValid} className='btn-green'>
         Create New Post
       </button>
     </form>
