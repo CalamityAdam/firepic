@@ -5,7 +5,9 @@ import { useForm } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import styled from 'styled-components';
 import { AuthCheck, Main } from '../../components';
+import { Textarea } from '../../components/styled';
 import { auth, firestore, serverTimestamp } from '../../lib/firebase';
 
 export default function AdminPostPage({}) {
@@ -18,21 +20,15 @@ export default function AdminPostPage({}) {
 
 function PostManager() {
   const [preview, setPreview] = useState(false);
-  console.log('preview: ', preview);
 
   const router = useRouter();
   const { slug } = router.query;
-  console.log('router query: ', router.query);
-  console.log('slug: ', slug);
-  console.log('currentUser: ', auth.currentUser);
-  console.log('uid: ', auth.currentUser.uid);
   const postRef = firestore
     .collection('users')
     .doc(auth.currentUser.uid)
     .collection('posts')
     .doc(slug);
   const [post] = useDocumentDataOnce(postRef); // listens for changes realtime
-  console.log('post: ', post);
 
   return (
     <Main>
@@ -55,7 +51,7 @@ function PostManager() {
               {preview ? 'Edit' : 'Preview'}
             </button>
             <Link href={`/${post.username}/${post.slug}`}>
-              <button className="btn-blue">Live view</button>
+              <button className='btn-blue'>Live view</button>
             </Link>
           </aside>
         </>
@@ -65,10 +61,11 @@ function PostManager() {
 }
 
 function PostForm({ defaultValues, postRef, preview }) {
-  const { handleSubmit, register, reset, watch } = useForm({
+  const { handleSubmit, register, reset, watch, formState, errors } = useForm({
     defaultValues,
     mode: 'onChange',
   });
+  const { isValid, isDirty } = formState;
 
   const updatePost = async ({ content, published }) => {
     await postRef.update({
@@ -91,14 +88,30 @@ function PostForm({ defaultValues, postRef, preview }) {
       )}
 
       <div className={preview ? 'u-displayNone' : 'controls'}>
-        <textarea name='content' ref={register}></textarea>
+        <Textarea
+          rows="25"
+          name='content'
+          ref={register({
+            maxLength: { value: 20000, message: 'content is too long' },
+            minLength: { value: 10, message: 'content is too short' },
+            required: { value: true, message: 'content is required' },
+          })}
+        ></Textarea>
+
+        {errors.content && (
+          <p className='text-danger'>{errors.content.message}</p>
+        )}
 
         <fieldset>
           <input name='published' type='checkbox' ref={register} />
           <label>Published</label>
         </fieldset>
 
-        <button type='submit' className='btn-green'>
+        <button
+          type='submit'
+          className='btn-green'
+          disabled={!isDirty || !isValid}
+        >
           Save Changes
         </button>
       </div>
