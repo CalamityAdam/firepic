@@ -6,3 +6,4 @@ export * from './PostContent'
 export * from './PostFeed';
 export * from './UserProfile';
 export * from './AuthCheck';
+export * from './Main';

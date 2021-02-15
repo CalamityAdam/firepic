@@ -1,15 +1,27 @@
 import { Toaster } from 'react-hot-toast';
 import Head from 'next/head';
-import styled from 'styled-components';
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { Navbar } from '../components';
 import { UserContext } from '../lib/context';
 import '../styles/normalize.css';
 import '../styles/globals.css';
 import { useUserData } from '../lib/hooks';
+import theme from '../lib/theme';
 
-const Wrapper = styled.div`
+const GlobalStyle = createGlobalStyle`
+  html {
+    background-color: ${({theme}) => theme.colors.bg};
+    color: ${({theme}) => theme.colors.fg};
+  }
+`;
+const PageWrapper = styled.div`
+`;
+const ContentWrapper = styled.div`
+  display: flex;
   margin: 0 auto;
-  text-align: center;
+  padding: 2rem;
+  justify-content: center;
+  max-width: 1200px;
 `;
 
 function MyApp({ Component, pageProps }) {
@@ -26,11 +38,16 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <UserContext.Provider value={userData}>
-        <Navbar />
-        <Wrapper>
-          <Component {...pageProps} />
-        </Wrapper>
-        <Toaster />
+        <ThemeProvider theme={theme} >
+          <GlobalStyle />
+          <PageWrapper>
+            <Navbar />
+            <ContentWrapper>
+              <Component {...pageProps} />
+            </ContentWrapper>
+            <Toaster />
+          </PageWrapper>
+        </ThemeProvider>
       </UserContext.Provider>
     </>
   );

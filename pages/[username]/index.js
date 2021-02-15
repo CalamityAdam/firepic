@@ -1,4 +1,4 @@
-import { UserProfile, PostFeed } from '../../components';
+import { UserProfile, PostFeed, Main } from '../../components';
 import { getUserWithUsername, postToJSON } from '../../lib/firebase';
 
 export async function getServerSideProps({ query }) {
@@ -30,9 +30,9 @@ export async function getServerSideProps({ query }) {
 
 export default function UserProfilePage({ user, posts }) {
   return (
-    <main>
+    <Main>
       <UserProfile user={user} />
       <PostFeed posts={posts} />
-    </main>
+    </Main>
   );
 }

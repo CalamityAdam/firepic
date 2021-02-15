@@ -1,7 +1,8 @@
 import { useCallback, useContext, useState, useEffect } from 'react';
+import debounce from 'lodash.debounce';
 import { UserContext } from '../lib/context';
 import { auth, firestore, googleAuthProvider } from '../lib/firebase';
-import debounce from 'lodash.debounce';
+import { Main } from '../components';
 
 export default function EnterPage({}) {
   const { user, username } = useContext(UserContext);
@@ -10,7 +11,7 @@ export default function EnterPage({}) {
   // 2. user signed in, but missing username <UsernameForm />
   // 3. user signed in, has username <SignOutButton />
   return (
-    <main>
+    <Main>
       {user ? (
         !username ? (
           <UsernameForm />
@@ -20,7 +21,7 @@ export default function EnterPage({}) {
       ) : (
         <SignInbutton />
       )}
-    </main>
+    </Main>
   );
 }
 

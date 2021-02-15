@@ -1,6 +1,6 @@
 import { firestore, getUserWithUsername, postToJSON } from '../../lib/firebase';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
-import { PostContent } from '../../components';
+import { PostContent, Main } from '../../components';
 
 export async function getStaticProps({ params }) {
   const { username, slug } = params;
@@ -47,7 +47,7 @@ export default function UserPostPage(props) {
   const post = realtimePost || props.post;
 
   return (
-    <main>
+    <Main>
       <section>
         <PostContent post={post} />
       </section>
@@ -57,6 +57,6 @@ export default function UserPostPage(props) {
           <strong>{post.heartCount || 0} 💙</strong>
         </p>
       </aside>
-    </main>
+    </Main>
   );
 }

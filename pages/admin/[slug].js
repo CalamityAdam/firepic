@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import { AuthCheck } from '../../components';
+import { AuthCheck, Main } from '../../components';
 import { auth, firestore, serverTimestamp } from '../../lib/firebase';
 
 export default function AdminPostPage({}) {
@@ -35,7 +35,7 @@ function PostManager() {
   console.log('post: ', post);
 
   return (
-    <main>
+    <Main>
       {post && (
         <>
           <section>
@@ -60,7 +60,7 @@ function PostManager() {
           </aside>
         </>
       )}
-    </main>
+    </Main>
   );
 }
 

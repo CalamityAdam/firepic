@@ -9,10 +9,6 @@ const Nav = styled.nav`
   width: 100%;
   height: 4rem;
   background-color: #22303c;
-  margin-bottom: 2rem;
-  > button {
-    color: #ff6666;
-  }
 `;
 const NavList = styled.ul`
   max-width: 1200px;
@@ -34,6 +30,9 @@ const AvatarButton = styled.button`
   background: transparent;
   border: none;
 `;
+const A = styled.a`
+  color: ${({ theme }) => theme.colors.teal};
+`;
 
 export function Navbar() {
   const { user, username } = useContext(UserContext);
@@ -51,7 +50,7 @@ export function Navbar() {
           <>
             <li>
               <Link href='/admin'>
-                <a className='link hvr-grow-rotate-backwards'>Write Posts</a>
+                <A className='link hvr-grow-rotate-backwards'>Write Posts</A>
               </Link>
             </li>
             <li>

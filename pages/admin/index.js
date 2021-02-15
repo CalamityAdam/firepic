@@ -4,18 +4,18 @@ import styled from 'styled-components';
 import kebabCase from 'lodash.kebabcase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import toast from 'react-hot-toast';
-import { AuthCheck, PostFeed } from '../../components';
+import { AuthCheck, PostFeed, Main } from '../../components';
 import { UserContext } from '../../lib/context';
 import { firestore, auth, serverTimestamp } from '../../lib/firebase';
 
 export default function AdminPostsPage({}) {
   return (
-    <main>
+    <Main>
       <AuthCheck>
         <PostList />
         <CreateNewPost />
       </AuthCheck>
-    </main>
+    </Main>
   );
 }
 
