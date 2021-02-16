@@ -1,19 +1,34 @@
 import { useContext, useState } from 'react';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 import kebabCase from 'lodash.kebabcase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import toast from 'react-hot-toast';
-import { AuthCheck, PostFeed, Main } from '../../components';
+import { AuthCheck, Loader, Main, PostFeed } from '../../components';
+import { Button, Card, Input } from '../../components/styled';
 import { UserContext } from '../../lib/context';
-import { firestore, auth, serverTimestamp } from '../../lib/firebase';
+import {
+  auth,
+  firestore,
+  serverTimestamp,
+  STATE_CHANGED,
+  storage,
+} from '../../lib/firebase';
+
+const CreateWrapper = styled.div`
+  width: auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+`;
 
 export default function AdminPostsPage({}) {
   return (
     <Main>
       <AuthCheck>
-        <PostList />
         <CreateNewPost />
+        <PostList />
       </AuthCheck>
     </Main>
   );
@@ -39,12 +54,47 @@ function CreateNewPost() {
   const router = useRouter();
   const { username } = useContext(UserContext);
   const [title, setTitle] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [photoURL, setPhotoURL] = useState(null);
 
   // Ensure slug is URL safe
   const slug = encodeURI(kebabCase(title));
   // Validate length
-  const isValid = title.length > 3 && title.length < 100;
+  const slugIsValid = title.length > 3 && title.length < 100;
 
+  // Creates a Firebase Upload Task
+  const uploadFile = async (e) => {
+    // Get the file
+    const file = Array.from(e.target.files)[0];
+    const extension = file.type.split('/')[1];
+
+    // Makes reference to the storage bucket location
+    const ref = storage.ref(
+      `uploads/${auth.currentUser.uid}/${Date.now()}.${extension}`
+    );
+    setUploading(true);
+
+    // Starts the upload
+    const task = ref.put(file);
+
+    // Listens to updates to upload task
+    task.on(STATE_CHANGED, (snapshot) => {
+      const pct = (
+        (snapshot.bytesTransferred / snapshot.totalBytes) *
+        100
+      ).toFixed(0);
+      setProgress(pct);
+
+      // Gets downloadURL AFTER task resolves (Note: this is not a native promise)
+      task
+        .then((d) => ref.getDownloadURL())
+        .then((url) => {
+          setPhotoURL(url);
+          setUploading(false);
+        });
+    });
+  };
   const createPost = async (e) => {
     e.preventDefault();
     const uid = auth.currentUser.uid;
@@ -59,7 +109,7 @@ function CreateNewPost() {
       content: '# hello world',
       createdAt: serverTimestamp(),
       heartCount: 0,
-      photoURL: 'https://picsum.photos/400/401',
+      photoURL,
       published: false,
       slug,
       title,
@@ -75,19 +125,49 @@ function CreateNewPost() {
   };
 
   return (
-    <form onSubmit={createPost}>
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder='My Awesome Post!'
-        className='post-Title'
-      />
-      <p>
-        <strong>Slug:</strong> {slug}
-      </p>
-      <button type='submit' disabled={!isValid} className='btn-green'>
-        Create New Post
-      </button>
-    </form>
+    <CreateWrapper>
+      <Card.Container>
+        <form onSubmit={createPost}>
+          <Loader show={uploading} />
+          {uploading && <h3>{progress}%</h3>}
+
+          {!uploading && (
+            <>
+              <label htmlFor='image-upload' className='btn'>
+                📸 Upload Img
+              </label>
+              <input
+                name='image-upload'
+                id='image-upload'
+                type='file'
+                onChange={uploadFile}
+                accept='image/x-png,image/gif,image/jpeg'
+              />
+            </>
+          )}
+
+          {photoURL && (
+            <Image
+              width={400}
+              height={400}
+              className='card-image'
+              src={photoURL}
+            />
+          )}
+
+          <Input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder='My Awesome Post!'
+          />
+          <p>
+            <strong>Slug:</strong> {slug}
+          </p>
+          <Button type='submit' disabled={!slugIsValid} className='btn-green'>
+            Create New Post
+          </Button>
+        </form>
+      </Card.Container>
+    </CreateWrapper>
   );
 }
