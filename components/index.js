@@ -1,4 +1,5 @@
 export * from './AuthCheck';
+export * from './HeartButton';
 export * from './Loader';
 export * from './Main';
 export * from './Metatags';
