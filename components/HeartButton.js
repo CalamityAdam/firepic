@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { firestore, auth, increment } from '../lib/firebase';
-import { useDocument } from 'react-firebase-hooks/firestore';
+import { useDocument, useDocumentData } from 'react-firebase-hooks/firestore';
 
 export function HeartButton({ postRef }) {
   const [bubblesActive, setBubblesActive] = useState(false);
@@ -16,7 +16,7 @@ export function HeartButton({ postRef }) {
   };
 
   const heartRef = postRef.collection('hearts').doc(auth.currentUser.uid);
-  const [heartDoc] = useDocument(heartRef);
+  const [heartDoc, loading, error] = useDocumentData(heartRef, { idField: 'id' });
 
   const addHeart = async () => {
     const uid = auth.currentUser.uid;
