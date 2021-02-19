@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { firestore, auth, increment } from '../lib/firebase';
-import { useDocument } from 'react-firebase-hooks/firestore';
+import { useDocument, useDocumentData } from 'react-firebase-hooks/firestore';
+
 
 export function HeartButton({ postRef }) {
   const [bubblesActive, setBubblesActive] = useState(false);
@@ -15,25 +16,18 @@ export function HeartButton({ postRef }) {
     }
   };
 
-  const heartRef = postRef?.collection('hearts').doc(auth.currentUser.uid);
-  const [heartDoc] = useDocument(heartRef);
+  const heartRef = postRef.collection('hearts').doc(auth.currentUser.uid);
+  const [heartDoc, loading, error] = useDocumentData(heartRef, { idField: 'id' });
 
   const addHeart = async () => {
     const uid = auth.currentUser.uid;
     const batch = firestore.batch();
-    console.log('postRef: ', postRef);
-    console.log('heartRef: ', heartRef);
-    console.log('uid: ', uid);
-    console.log('batch: ', batch);
 
     batch.update(postRef, { heartCount: increment(1) });
     batch.set(heartRef, { uid });
 
-    batch
-      .commit()
-      .then(() => {
-        // TODO: update hearts here
-      });
+    await batch.commit();
+
   };
   const removeHeart = async () => {
     const batch = firestore.batch();

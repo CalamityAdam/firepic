@@ -16,10 +16,10 @@ export default function EnterPage({}) {
         !username ? (
           <UsernameForm />
         ) : (
-          <SignOutbutton />
+          <SignOutButton />
         )
       ) : (
-        <SignInbutton />
+        <SignInButton />
       )}
     </Main>
   );
