@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Link from 'next/link';
 import styled, { ThemeContext, ThemeProvider } from 'styled-components';
 import Image from 'next/image';
@@ -41,6 +41,7 @@ function PostCard({ post, admin = false }) {
   const [updatedPost] = useDocumentData(postRef);
 
   const postData = updatedPost || post;
+
   return (
     <Card.Container>
       {/* <Link href={`/${post.username}`}>
