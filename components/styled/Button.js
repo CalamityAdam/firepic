@@ -35,19 +35,19 @@ export const Button = styled.button`
     color: ${({ theme }) => theme.colors.fg};
   }
 
-  &--ghost {
+  &.ghost {
     border-color: currentColor;
     background-color: transparent;
     color: ${({ theme }) => theme.colors.teal};
   }
 
-  &--ghost:focus,
-  &--ghost:hover {
+  &.ghost:focus,
+  &.ghost:hover {
     background-color: rgba(0, 115, 185, 0.1);
     color: #0091d9;
   }
 
-  &--borderless {
+  &.borderless {
     -webkit-transition: color 0.3s ease, box-shadow 0.3s ease;
     transition: color 0.3s ease, box-shadow 0.3s ease;
     border-radius: 0;
@@ -58,8 +58,8 @@ export const Button = styled.button`
     color: ${({ theme }) => theme.colors.teal};
   }
 
-  &--borderless:focus,
-  &--borderless:hover {
+  &.borderless:focus,
+  &.borderless:hover {
     box-shadow: 0 2px 0 currentColor;
     background-color: transparent;
     color: #047;

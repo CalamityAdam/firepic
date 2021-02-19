@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { useForm } from 'react-hook-form';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
-import styled from 'styled-components';
 import { AuthCheck, Main } from '../../components';
-import { Textarea } from '../../components/styled';
+import { Textarea, Button } from '../../components/styled';
 import { auth, firestore, serverTimestamp } from '../../lib/firebase';
 
 export default function AdminPostPage({}) {
@@ -81,6 +81,12 @@ function PostForm({ defaultValues, postRef, preview }) {
 
   return (
     <form onSubmit={handleSubmit(updatePost)}>
+      <Image
+        width={400}
+        height={400}
+        src={defaultValues.photoURL}
+      />
+      
       {preview && (
         <div>
           <ReactMarkdown>{watch('content')}</ReactMarkdown>
@@ -107,13 +113,13 @@ function PostForm({ defaultValues, postRef, preview }) {
           <label>Published</label>
         </fieldset>
 
-        <button
+        <Button
           type='submit'
           className='btn-green'
           disabled={!isDirty || !isValid}
         >
           Save Changes
-        </button>
+        </Button>
       </div>
     </form>
   );
