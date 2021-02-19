@@ -89,7 +89,7 @@ function PostForm({ defaultValues, postRef, preview }) {
 
       <div className={preview ? 'u-displayNone' : 'controls'}>
         <Textarea
-          rows="25"
+          rows='25'
           name='content'
           ref={register({
             maxLength: { value: 20000, message: 'content is too long' },

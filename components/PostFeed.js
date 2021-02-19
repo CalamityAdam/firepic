@@ -36,7 +36,7 @@ export function PostFeed({ posts, admin }) {
 
 function PostCard({ post, admin = false }) {
   const theme = useContext(ThemeContext);
-  
+
   const postRef = firestore.doc(`users/${post.uid}/posts/${post.slug}`);
   const [updatedPost] = useDocumentData(postRef);
 
