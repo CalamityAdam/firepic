@@ -95,6 +95,7 @@ function CreateNewPost() {
         });
     });
   };
+
   const createPost = async (e) => {
     e.preventDefault();
     const uid = auth.currentUser.uid;
@@ -126,40 +127,57 @@ function CreateNewPost() {
 
   return (
     <CreateWrapper>
-      <Card.Container>
+      <Card.Container className="small">
         <form onSubmit={createPost}>
           <Loader show={uploading} />
           {uploading && <h3>{progress}%</h3>}
 
           {!uploading && (
+            // not currently uploading/loading
             <>
-              <label htmlFor='image-upload' className='btn'>
-                📸 Upload Img
-              </label>
-              <input
-                name='image-upload'
-                id='image-upload'
-                type='file'
-                onChange={uploadFile}
-                accept='image/x-png,image/gif,image/jpeg'
-              />
+              <div class='formField'>
+                <label htmlFor='image-upload' className='btn'>
+                  📸 Upload Img
+                </label>
+                <div class='formField-control'>
+                  <div class='input'>
+                    <input
+                      name='image-upload'
+                      id='image-upload'
+                      type='file'
+                      onChange={uploadFile}
+                      accept='image/x-png,image/gif,image/jpeg'
+                    />
+                  </div>
+                </div>
+              </div>
             </>
           )}
 
           {photoURL && (
-            <Image
-              width={400}
-              height={400}
-              className='card-image'
-              src={photoURL}
-            />
+            <div>
+              <Image
+                width={400}
+                height={400}
+                className='card-image'
+                src={photoURL}
+              />
+            </div>
           )}
 
-          <Input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder='My Awesome Post!'
-          />
+          <div class='formField'>
+            <label for='title'>Title</label>
+            <div class='formField-control'>
+              <div class='input'>
+                <Input
+                  id='title'
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder='My Awesome Post!'
+                />
+              </div>
+            </div>
+          </div>
           <p>
             <strong>Slug:</strong> {slug}
           </p>

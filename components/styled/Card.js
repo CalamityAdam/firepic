@@ -11,6 +11,11 @@ const Container = styled.section`
   align-items: center;
   color: ${({ theme }) => theme.colors.fg};
   box-shadow: 0 6px 16px 0 rgba(31, 36, 38, 0.18);
+
+  &.small {
+    flex: 0;
+    padding: 1rem;
+  }
 `;
 const Content = styled.div`
   display: flex;
@@ -27,5 +32,6 @@ const Actions = styled.div`
   align-items: center;
   padding: 0.5rem 0.5rem 0;
 `;
+
 
 export const Card =  { Container, Content, Actions };

@@ -83,6 +83,13 @@ button {
   display: none;
 }
 
+.formField {
+  margin-bottom: 1rem;
+}
+.formField-control {
+  padding: 0.25rem 0 0;
+}
+
 
 /* Hover Stuff */
 
