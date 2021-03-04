@@ -166,7 +166,7 @@ function CreateNewPost() {
           )}
 
           <div class='formField'>
-            <label for='title'>Title</label>
+            <label htmlFor='title'>Title</label>
             <div class='formField-control'>
               <div class='input'>
                 <Input
