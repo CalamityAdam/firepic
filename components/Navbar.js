@@ -20,6 +20,14 @@ const NavList = styled.ul`
   list-style: none;
   height: 100%;
   align-items: center;
+
+  > :not(:first-child):not(:last-child) {
+    margin-right: 1rem;
+  }
+
+  > li {
+    cursor: pointer;
+  }
 `;
 const Avatar = styled.img`
   height: 40px;
@@ -47,6 +55,7 @@ export function Navbar() {
         </li>
 
         {username && (
+          // user is authenticated (logged in)
           <>
             <li>
               <Link href='/admin'>
@@ -63,6 +72,7 @@ export function Navbar() {
           </>
         )}
         {!username && (
+          // user is unauthenticated
           <li>
             <Link href='/enter'>
               <button>Log in</button>
