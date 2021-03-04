@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { UserContext } from '../lib/context';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { Avatar } from './styled';
 
 const Nav = styled.nav`
   display: flex;
@@ -28,11 +29,6 @@ const NavList = styled.ul`
   > li {
     cursor: pointer;
   }
-`;
-const Avatar = styled.img`
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
 `;
 const AvatarButton = styled.button`
   background: transparent;
