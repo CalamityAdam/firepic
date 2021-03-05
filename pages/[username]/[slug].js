@@ -3,6 +3,7 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { PostContent, Main } from '../../components';
 
 export async function getStaticProps({ params }) {
+  // (static generation) fetch data at build time
   const { username, slug } = params;
   const userDoc = await getUserWithUsername(username);
 
@@ -22,6 +23,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
+  // (static generation) specify dynamic routes to pre-render pages based on data
   // improvable by using Admin SDK to select empty docs
   const snapshot = await firestore.collectionGroup('posts').get();
   const paths = snapshot.docs.map((doc) => {
@@ -48,15 +50,7 @@ export default function UserPostPage(props) {
 
   return (
     <Main>
-      <section>
-        <PostContent post={post} />
-      </section>
-
-      <aside>
-        <p>
-          <strong>{post.heartCount || 0} 💙</strong>
-        </p>
-      </aside>
+      <PostContent post={post} />
     </Main>
   );
 }

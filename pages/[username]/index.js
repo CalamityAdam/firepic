@@ -2,6 +2,7 @@ import { UserProfile, PostFeed, Main } from '../../components';
 import { getUserWithUsername, postToJSON } from '../../lib/firebase';
 
 export async function getServerSideProps({ query }) {
+  // (server-size rendering) fetch data on each request
   const { username } = query;
   const userDoc = await getUserWithUsername(username);
 

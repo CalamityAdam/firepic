@@ -127,7 +127,7 @@ function CreateNewPost() {
 
   return (
     <CreateWrapper>
-      <Card.Container className="small">
+      <Card.Container className='small'>
         <form onSubmit={createPost}>
           <Loader show={uploading} />
           {uploading && <h3>{progress}%</h3>}

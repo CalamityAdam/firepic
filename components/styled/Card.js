@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.section`
+  max-width: fit-content;
   flex: 1;
   display: flex;
   border-radius: 8px;
